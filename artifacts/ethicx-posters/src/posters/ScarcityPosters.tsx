@@ -162,7 +162,7 @@ export const ScarcityPosters: PosterDefinition[] = [
           <h2 style={{ fontSize: '40px', fontWeight: 700, color: 'rgba(255,255,255,0.7)', letterSpacing: '0.1em', marginBottom: '20px' }}>HARD CAP PROTOCOL</h2>
           
           <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginBottom: '40px' }}>
-            {['0','2',',','1','0','0',',','0','0','0'].map((char, i) => (
+            {['2',',','1','0','0',',','0','0','0'].map((char, i) => (
               <div key={i} style={{ 
                 background: char === ',' ? 'transparent' : '#111', 
                 color: char === ',' ? 'rgba(255,255,255,0.3)' : 'white',
@@ -203,14 +203,14 @@ export const ScarcityPosters: PosterDefinition[] = [
           <div style={{ position: 'absolute', top: '50%', left: '0', right: '0', height: '4px', background: 'rgba(255,255,255,0.2)', transform: 'translateY(-50%)' }} />
           
           <div style={{ position: 'absolute', left: '10%', display: 'flex', flexDirection: 'column', alignItems: 'center', transform: 'translateY(-50%)' }}>
-            <div style={{ width: '30px', height: '30px', background: 'white', borderRadius: '50%', border: '6px solid #111', zIndex: 2 }} />
+            <img src={btcLogo} alt="Bitcoin" style={{ width: '64px', height: '64px', zIndex: 2, opacity: 0.6 }} />
             <span style={{ fontSize: '32px', fontWeight: 800, marginTop: '20px' }}>2009</span>
             <span style={{ fontSize: '24px', fontWeight: 600, color: 'rgba(255,255,255,0.5)' }}>BTC 21M</span>
           </div>
           
           <div style={{ position: 'absolute', right: '10%', display: 'flex', flexDirection: 'column', alignItems: 'center', transform: 'translateY(-50%)' }}>
-            <div style={{ width: '40px', height: '40px', background: '#F7931A', borderRadius: '50%', border: '6px solid #111', zIndex: 2, boxShadow: '0 0 20px #F7931A' }} />
-            <span style={{ fontSize: '40px', fontWeight: 900, marginTop: '20px', color: '#F7931A' }}>2025</span>
+            <img src={eixLogo} alt="EthicX" style={{ width: '80px', height: '80px', zIndex: 2, filter: 'drop-shadow(0 0 20px rgba(247,147,26,0.8))' }} />
+            <span style={{ fontSize: '40px', fontWeight: 900, marginTop: '20px', color: '#F7931A' }}>2026</span>
             <span style={{ fontSize: '28px', fontWeight: 700, color: 'white' }}>EIX 2.1M</span>
           </div>
         </div>

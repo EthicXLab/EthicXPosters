@@ -46,19 +46,7 @@ export function PosterWrapper({ children, badgeText }: PosterWrapperProps) {
               <span style={{ fontSize: '24px', fontWeight: 600, color: '#F7931A', letterSpacing: '0.1em', textTransform: 'uppercase' }}>WEB3 INNOVATION</span>
             </div>
           </div>
-          <div style={{ 
-            padding: '12px 30px', 
-            border: '2px solid #F7931A', 
-            borderRadius: '100px', 
-            fontSize: '28px', 
-            fontWeight: 700,
-            textTransform: 'uppercase',
-            letterSpacing: '0.05em',
-            background: 'rgba(247, 147, 26, 0.1)',
-            color: '#FFFFFF'
-          }}>
-            {badgeText}
-          </div>
+          <div style={{ display: 'none' }} />
         </div>
 
         {/* Main Content */}
