@@ -1,30 +1,36 @@
 import React, { useState } from 'react';
-import { allPosters, PosterCategory } from '@/posters';
+import { currentPosters, oldPosters, PosterCategory } from '@/posters';
 import { PosterCard } from '@/components/PosterCard';
 import { PosterModal } from '@/components/PosterModal';
 import { MonitorPlay, Download, Loader2 } from 'lucide-react';
 import { downloadAllPosters } from '@/lib/downloadPoster';
 import ethicxLogo from '@assets/1764163440584-removebg-preview_1785157622863.png';
 
-const CATEGORIES: ('All' | PosterCategory)[] = ['All', 'Scarcity', 'Presale', 'Developer', 'Earn', 'Community'];
+type Collection = 'new' | 'old';
+
+const NEW_CATEGORIES: ('All' | PosterCategory)[] = ['All', 'Token Utility', 'Platform', 'Architecture', 'Rewards', 'Economy', 'Ecosystem'];
+const OLD_CATEGORIES: ('All' | PosterCategory)[] = ['All', 'Scarcity', 'Presale', 'Developer', 'Earn', 'Community'];
 
 function App() {
+  const [collection, setCollection] = useState<Collection>('new');
   const [selectedCategory, setSelectedCategory] = useState<'All' | PosterCategory>('All');
   const [viewingPosterId, setViewingPosterId] = useState<string | null>(null);
   const [dlProgress, setDlProgress] = useState<{ current: number; total: number } | null>(null);
 
+  const activePosters = collection === 'new' ? currentPosters : oldPosters;
+  const categories = collection === 'new' ? NEW_CATEGORIES : OLD_CATEGORIES;
   const filteredPosters = selectedCategory === 'All'
-    ? allPosters
-    : allPosters.filter(p => p.category === selectedCategory || (selectedCategory === 'Community' && p.category === 'Vision'));
+    ? activePosters
+    : activePosters.filter(p => p.category === selectedCategory || (selectedCategory === 'Community' && p.category === 'Vision'));
 
-  const viewingPoster = viewingPosterId ? allPosters.find(p => p.id === viewingPosterId) || null : null;
+  const viewingPoster = viewingPosterId ? activePosters.find(p => p.id === viewingPosterId) || null : null;
 
   const isDownloading = dlProgress !== null;
 
   const handleDownloadAll = () => {
     if (isDownloading) return;
     downloadAllPosters(
-      allPosters,
+      activePosters,
       (current, total) => setDlProgress({ current, total }),
       () => setDlProgress(null),
     );
@@ -44,7 +50,7 @@ function App() {
           </div>
           <div className="hidden md:flex items-center gap-2 text-zinc-500 text-sm font-medium">
             <MonitorPlay size={16} />
-            <span>50 Premium Assets</span>
+            <span>{activePosters.length} Premium Assets</span>
           </div>
         </div>
       </header>
@@ -56,9 +62,35 @@ function App() {
             Marketing Toolkit
           </h2>
           <p className="text-zinc-400 max-w-2xl text-lg">
-            High-resolution, brand-aligned promotional posters for the EthicX ecosystem.
-            Ready to download and deploy across all social channels.
+            {collection === 'new'
+              ? 'The latest EIX utility, architecture, reward, and ecosystem campaign.'
+              : 'The original EthicX scarcity, presale, developer, earn, and community campaign.'}
+            {' '}Ready to download and deploy across all social channels.
           </p>
+        </div>
+
+        {/* Collections */}
+        <div className="flex flex-wrap items-center gap-3 mb-6">
+          <button
+            onClick={() => { setCollection('new'); setSelectedCategory('All'); setViewingPosterId(null); }}
+            className={`px-6 py-3 rounded-xl text-sm font-black uppercase tracking-widest transition-all border ${
+              collection === 'new'
+                ? 'bg-primary text-black border-primary shadow-[0_0_28px_rgba(247,147,26,0.25)]'
+                : 'bg-white/5 text-zinc-400 border-white/10 hover:bg-white/10 hover:text-white'
+            }`}
+          >
+            New EIX Utility Posters
+          </button>
+          <button
+            onClick={() => { setCollection('old'); setSelectedCategory('All'); setViewingPosterId(null); }}
+            className={`px-6 py-3 rounded-xl text-sm font-black uppercase tracking-widest transition-all border ${
+              collection === 'old'
+                ? 'bg-primary text-black border-primary shadow-[0_0_28px_rgba(247,147,26,0.25)]'
+                : 'bg-white/5 text-zinc-400 border-white/10 hover:bg-white/10 hover:text-white'
+            }`}
+          >
+            Old Posters
+          </button>
         </div>
 
         {/* ── DOWNLOAD ALL BUTTON ── */}
@@ -93,7 +125,7 @@ function App() {
             ) : (
               <>
                 <Download size={20} className="shrink-0" />
-                <span>Download All 50 Posters</span>
+                <span>Download All {activePosters.length} Posters</span>
               </>
             )}
           </button>
@@ -106,7 +138,7 @@ function App() {
 
         {/* Filters */}
         <div className="flex flex-wrap gap-2 mb-8">
-          {CATEGORIES.map(category => (
+          {categories.map(category => (
             <button
               key={category}
               onClick={() => setSelectedCategory(category)}
